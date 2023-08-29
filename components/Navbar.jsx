@@ -4,21 +4,20 @@ import { useState, useEffect } from 'react';
 import { signIn, signOut, useSession, getProviders } from 'next-auth/react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { set } from 'mongoose';
 
 export default function Navbar() {
-  const isUserLoggedIn = true;
+  const {data: session} = useSession();
   const [providers, setProviders] = useState(null);
   const [toggleDropdown, setToggleDropdown] = useState(false);
 
   useEffect(() => {
-    const setProviders = async () => {
+    const setupProviders = async () => {
       const response = await getProviders();
 
       setProviders(response);
     };
 
-    setProviders();
+    setupProviders();
   }, []);
 
   return (
@@ -36,10 +35,10 @@ export default function Navbar() {
 
       {/* Desktop navigation */}
       <div className='sm:flex hidden'>
-        {isUserLoggedIn ? (
+        {session?.user ? (
           <div className='flex gap-3 md:gap-5'>
             <Link href='/create-prompt' className='black_btn' >
-              Create Post
+              Create Prompt
             </Link>
 
             <button type='button' onClick={signOut} className='outline_btn'>
@@ -48,7 +47,7 @@ export default function Navbar() {
 
             <Link href='/profile'>
               <Image
-                src='/assets/images/logo.svg'
+                src={session?.user.image}
                 alt='Profile'
                 width={37}
                 height={37}
@@ -59,7 +58,7 @@ export default function Navbar() {
         ): (
           <>
             {providers && Object.values(providers).map((provider) => (
-              <button type='button' key={providers.name} onClick={() => signIn(provider.id)} className='black_btn'>
+              <button type='button' key={provider.name} onClick={() => signIn(provider.id)} className='black_btn'>
                 Sign In
               </button>
             ))}
@@ -69,10 +68,10 @@ export default function Navbar() {
 
       {/* Mobile navigation */}
       <div className='sm:hidden flex relative'>
-        {isUserLoggedIn ? (
+        {session?.user ? (
           <div className='flex'>
             <Image
-              src='/assets/images/logo.svg'
+              src={session?.user.image}
               alt='Profile'
               width={37}
               height={37}
