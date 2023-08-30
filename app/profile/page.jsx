@@ -7,7 +7,7 @@ import Profile from '@components/Profile';
 
 export default function MyProfile() {
   const { data: session } = useSession();
-  const [myPrompts, setMyPrompts] = useState([]);
+  const [myPosts, setMyPosts] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -15,7 +15,7 @@ export default function MyProfile() {
       const response = await fetch(`/api/users/${session?.user.id}/prompts` );
       const data = await response.json();
 
-      setMyPrompts(data);
+      setMyPosts(data);
     };
 
     if (session?.user.id) {
@@ -23,11 +23,11 @@ export default function MyProfile() {
     }
   }, []);
 
-  const handleEdit = (prompt) => {
-    router.push(`/update-prompt?id=${prompt.id}`);
+  const handleEdit = (post) => {
+    router.push(`/update-prompt?id=${post.id}`);
   };
 
-  const handleDelete = async (prompt) => {
+  const handleDelete = async (post) => {
 
   };
 
@@ -35,7 +35,7 @@ export default function MyProfile() {
     <Profile
       name='My'
       desc='Welcome to your personalized profile page!'
-      data={myPrompts}
+      data={myPosts}
       handleEdit={handleEdit}
       handleDelete={handleDelete}
     />

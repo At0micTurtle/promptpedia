@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-export default function Form({ type, prompt, setPrompt, submitting, handleSubmit }) {
+export default function Form({ type, post, setPrompt, submitting, handleSubmit }) {
   return (
     <section className='w-full max-w-full flex-start flex-col'>
       <h1 className='head_text text-left'>
@@ -18,8 +18,8 @@ export default function Form({ type, prompt, setPrompt, submitting, handleSubmit
           </span>
 
           <textarea
-            value={prompt.prompt}
-            onChange={(e) => setPrompt({ ...prompt, prompt: e.target.value })}
+            value={post.prompt}
+            onChange={(e) => setPost({ ...post, prompt: e.target.value })}
             placeholder='Write your prompt here...'
             required
             className='form_textarea'
@@ -32,8 +32,8 @@ export default function Form({ type, prompt, setPrompt, submitting, handleSubmit
           </span>
 
           <input
-            value={prompt.tag}
-            onChange={(e) => setPrompt({ ...prompt, tag: e.target.value })}
+            value={post.tag}
+            onChange={(e) => setPost({ ...post, tag: e.target.value })}
             placeholder='#tag'
             required
             className='form_input'

@@ -6,10 +6,10 @@ import PromptCard from './PromptCard';
 const PromptCardList = ({ data, handleTagClick }) => {
   return (
     <div className='mt-16 prompt_layout'>
-      {data.map((prompt) => (
+      {data.map((post) => (
         <PromptCard
-          key={prompt._id}
-          prompt={prompt}
+          key={post._id}
+          post={post}
           handleTagClick={handleTagClick}
         />
       ))}
@@ -19,7 +19,9 @@ const PromptCardList = ({ data, handleTagClick }) => {
 
 export default function Feed() {
   const [searchText, setSearchText] = useState('');
-  const [prompts, setPrompts] = useState([])
+  const [searchTimeout, setSearchTimeout] = useState(null);
+  const [searchedResults, setSearchedResults] = useState([]);
+  const [allPost, setAllPost] = useState([])
   const handleSearchChange = (e) => {
     
   };
@@ -29,7 +31,7 @@ export default function Feed() {
       const response = await fetch('/api/prompt');
       const data = await response.json();
 
-      setPrompts(data);
+      setAllPost(data);
     };
 
     fetchPrompts();
@@ -49,7 +51,7 @@ export default function Feed() {
       </form>
 
       <PromptCardList
-        data={prompts}
+        data={allPost}
         handleTagClick={() => {}}
       />
     </section>

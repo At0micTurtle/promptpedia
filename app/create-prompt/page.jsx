@@ -9,7 +9,7 @@ export default function CreatePrompt() {
   const router = useRouter();
   const { data: session } = useSession();
   const [submitting, setSubmitting] = useState(false);
-  const [prompt, setPrompt] = useState({
+  const [post, setPost] = useState({
     prompt: '',
     tag: '',
   });
@@ -22,9 +22,9 @@ export default function CreatePrompt() {
       const response = await fetch('/api/prompt/new', {
         method: 'POST',
         body: JSON.stringify({
-          prompt: prompt.prompt,
+          prompt: post.prompt,
           userId: session?.user.id,
-          tag: prompt.tag,
+          tag: post.tag,
         })
       });
 
@@ -41,8 +41,8 @@ export default function CreatePrompt() {
   return (
     <Form
       type="Create"
-      prompt={prompt}
-      setPrompt={setPrompt}
+      post={post}
+      setPost={setPost}
       submitting={submitting}
       handleSubmit={createPrompt}
     />

@@ -9,12 +9,12 @@ export default function Profile({ name, desc, data, handleEdit, handleDelete }) 
       <p className='desc text-left'>{desc}</p>
 
       <div className='mt-10 prompt_layout'>
-        {data.map((prompt) => (
+        {data.map((post) => (
           <PromptCard
-            key={prompt._id}
-            prompt={prompt}
-            handleEdit={() => handleEdit && handleEdit(prompt)}
-            handleDelete={() => handleDelete && handleDelete(prompt)}
+            key={post._id}
+            post={post}
+            handleEdit={() => handleEdit && handleEdit(post)}
+            handleDelete={() => handleDelete && handleDelete(post)}
           />
         ))}
       </div>

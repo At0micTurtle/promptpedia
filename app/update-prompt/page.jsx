@@ -9,17 +9,14 @@ export default function UpdatePrompt() {
   const searchParams = useSearchParams();
   const promptId = searchParams.get('id');
   const [submitting, setSubmitting] = useState(false);
-  const [prompt, setPrompt] = useState({
-    prompt: '',
-    tag: '',
-  });
+  const [post, setPost] = useState({ prompt: '', tag: '', });
 
   useEffect(() => {
     const getPromptDetails = async () => {
       const response = await fetch(`/api/prompt/${promptId}`);
       const data = await response.json();
 
-      setPrompt({
+      setPost({
         prompt: data.prompt,
         tag: data.tag,
       });
@@ -27,6 +24,7 @@ export default function UpdatePrompt() {
 
     if (promptId) {
       getPromptDetails();
+      console.log('Prompt details fetched!')
     }
   }, [promptId]);
 
@@ -42,8 +40,8 @@ export default function UpdatePrompt() {
       const response = await fetch(`/api/prompt/${promptId}`, {
         method: 'PATCH',
         body: JSON.stringify({
-          prompt: prompt.prompt,
-          tag: prompt.tag,
+          prompt: post.prompt,
+          tag: post.tag,
         })
       });
 
@@ -60,8 +58,8 @@ export default function UpdatePrompt() {
   return (
     <Form
       type="Edit"
-      prompt={prompt}
-      setPrompt={setPrompt}
+      post={post}
+      setPost={setPost}
       submitting={submitting}
       handleSubmit={updatePrompt}
     />
